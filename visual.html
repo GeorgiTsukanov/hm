@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Strategies in Judicial Interrogations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #334155;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #475569;
+            margin-bottom: 5px;
+        }
+
+        .metadata {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 1100px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            border-top: 4px solid;
+        }
+
+        .interrogator-panel {
+            border-top-color: #ef4444;
+        }
+
+        .respondent-panel {
+            border-top-color: #10b981;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .panel-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-left: 10px;
+        }
+
+        .panel-icon {
+            font-size: 1.5rem;
+        }
+
+        .panel-subtitle {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .strategy-card {
+            border-left: 4px solid;
+            padding-left: 20px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            background-color: #f8fafc;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 12px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+
+        .strategy-card:hover {
+            background-color: #f1f5f9;
+        }
+
+        .strategy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .strategy-title-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .strategy-icon {
+            font-size: 1.2rem;
+        }
+
+        .strategy-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.1rem;
+        }
+
+        .strategy-count {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .strategy-arrow {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+
+        .strategy-arrow.expanded {
+            transform: rotate(180deg);
+        }
+
+        .tactics-container {
+            padding-left: 28px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .tactics-container.expanded {
+            display: block;
+        }
+
+        .tactic-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .tactic-arrow {
+            color: #cbd5e1;
+            margin-top: 2px;
+        }
+
+        .tactic-text {
+            color: #475569;
+        }
+
+        .findings-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .findings-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 25px;
+        }
+
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .finding-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .finding-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .finding-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .finding-description {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .blue-card {
+            background-color: #eff6ff;
+        }
+
+        .purple-card {
+            background-color: #f5f3ff;
+        }
+
+        .green-card {
+            background-color: #f0fdf4;
+        }
+
+        .orange-card {
+            background-color: #fff7ed;
+        }
+
+        .blue-value {
+            color: #2563eb;
+        }
+
+        .purple-value {
+            color: #7c3aed;
+        }
+
+        .green-value {
+            color: #16a34a;
+        }
+
+        .orange-value {
+            color: #ea580c;
+        }
+
+        .insight-container {
+            background: linear-gradient(90deg, #eef2ff 0%, #f5f3ff 100%);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .insight-icon {
+            color: #4f46e5;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .insight-title {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.2rem;
+        }
+
+        .insight-text {
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .insight-text strong {
+            color: #4338ca;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Communication Strategies & Tactics in Judicial Interrogations</h1>
+            <p class="subtitle">Linguopragmatic Analysis of Legal Discourse</p>
+            <p class="metadata">Based on 7 English-language court transcripts (679 pages)</p>
+            <p class="instructions">Click on any strategy to view its specific tactics</p>
+        </div>
+
+        <div class="content-grid">
+            <!-- Interrogator Panel -->
+            <div class="panel interrogator-panel">
+                <div class="panel-header">
+                    <div class="panel-icon" style="color: #ef4444;">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h2 class="panel-title">Interrogating Party</h2>
+                </div>
+                <p class="panel-subtitle">4 Strategies · 16 Tactics Total</p>
+                
+                <div id="interrogator-strategies">
+                    <!-- Strategies will be inserted here by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Respondent Panel -->
+            <div class="panel respondent-panel">
+                <div class="panel-header">
+                    <div class="panel-icon" style="color: #10b981;">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h2 class="panel-title">Respondent Party</h2>
+                </div>
+                <p class="panel-subtitle">3 Strategies · 10 Tactics Total</p>
+                
+                <div id="respondent-strategies">
+                    <!-- Strategies will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Findings -->
+        <div class="findings-container">
+            <h3 class="findings-title">Key Research Findings</h3>
+            <div class="findings-grid">
+                <div class="finding-card blue-card">
+                    <div class="finding-value blue-value">3</div>
+                    <div class="finding-label">Structural Stages</div>
+                    <div class="finding-description">Opening, Q&A, Closing</div>
+                </div>
+                <div class="finding-card purple-card">
+                    <div class="finding-value purple-value">7</div>
+                    <div class="finding-label">Total Strategies</div>
+                    <div class="finding-description">Asymmetric power dynamics</div>
+                </div>
+                <div class="finding-card green-card">
+                    <div class="finding-value green-value">26</div>
+                    <div class="finding-label">Communication Tactics</div>
+                    <div class="finding-description">Diverse linguistic tools</div>
+                </div>
+                <div class="finding-card orange-card">
+                    <div class="finding-value orange-value">679</div>
+                    <div class="finding-label">Pages Analyzed</div>
+                    <div class="finding-description">7 court transcripts</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research Insight -->
+        <div class="insight-container">
+            <div class="insight-header">
+                <div class="insight-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="insight-title">Research Insight</div>
+            </div>
+            <p class="insight-text">
+                The research reveals that interrogators employ <strong>more strategies and tactics</strong> (4 strategies, 16 tactics) 
+                compared to respondents (3 strategies, 10 tactics), reflecting the <strong>asymmetric power structure</strong> inherent 
+                in judicial interrogations. Each tactic is carefully chosen to achieve specific communicative goals: extracting information, 
+                establishing credibility, or influencing perception.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>Visualization of Judicial Discourse Strategies | Linguopragmatic Analysis</p>
+        </div>
+    </div>
+
+    <script>
+        // Data for strategies
+        const interrogatorStrategies = [
+            { 
+                name: 'Accusation Strategy', 
+                tactics: [
+                    'Direct accusation',
+                    'Leading to confession',
+                    'Discrediting testimony',
+                    'Reference to evidence'
+                ],
+                color: '#ef4444',
+                icon: 'balance-scale'
+            },
+            { 
+                name: 'Defense Strategy', 
+                tactics: [
+                    'Denial of guilt',
+                    'Transfer of responsibility',
+                    'Positive characterization',
+                    'Objection'
+                ],
+                color: '#3b82f6',
+                icon: 'shield-alt'
+            },
+            { 
+                name: 'Exposing Lies Strategy', 
+                tactics: [
+                    'Pointing out contradictions',
+                    'Leading questions',
+                    'Logical proof',
+                    'Distortion'
+                ],
+                color: '#f59e0b',
+                icon: 'search'
+            },
+            { 
+                name: 'Psychological Impact Strategy', 
+                tactics: [
+                    'Criticism',
+                    'Reprimand',
+                    'Threat',
+                    'Pressure'
+                ],
+                color: '#8b5cf6',
+                icon: 'brain'
+            }
+        ];
+
+        const respondentStrategies = [
+            { 
+                name: 'Self-Defense Strategy', 
+                tactics: [
+                    'Denial of guilt',
+                    'Evasion',
+                    'Redirecting to third party',
+                    'Deflecting suspicion'
+                ],
+                color: '#10b981',
+                icon: 'shield-alt'
+            },
+            { 
+                name: 'Counter-Accusation Strategy', 
+                tactics: [
+                    'Counter-accusation',
+                    'Discrediting interrogator',
+                    'Pointing out procedural violations'
+                ],
+                color: '#ef4444',
+                icon: 'balance-scale'
+            },
+            { 
+                name: 'Cooperation Strategy', 
+                tactics: [
+                    'Demonstrating willingness to cooperate',
+                    'Providing additional information',
+                    'Initiative information provision'
+                ],
+                color: '#06b6d4',
+                icon: 'user-check'
+            }
+        ];
+
+        // State to track expanded strategies
+        let expandedStrategy = null;
+
+        // Function to toggle strategy expansion
+        function toggleStrategy(side, index) {
+            const key = `${side}-${index}`;
+            
+            if (expandedStrategy === key) {
+                expandedStrategy = null;
+            } else {
+                expandedStrategy = key;
+            }
+            
+            renderStrategies();
+        }
+
+        // Function to create a strategy card
+        function createStrategyCard(strategy, index, side) {
+            const isExpanded = expandedStrategy === `${side}-${index}`;
+            
+            const strategyCard = document.createElement('div');
+            strategyCard.className = 'strategy-card';
+            strategyCard.style.borderLeftColor = strategy.color;
+            strategyCard.onclick = () => toggleStrategy(side, index);
+            
+            strategyCard.innerHTML = `
+                <div class="strategy-header">
+                    <div class="strategy-title-container">
+                        <div class="strategy-icon" style="color: ${strategy.color}">
+                            <i class="fas fa-${strategy.icon}"></i>
+                        </div>
+                        <div class="strategy-name">${strategy.name}</div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span class="strategy-count">${strategy.tactics.length} tactics</span>
+                        <div class="strategy-arrow ${isExpanded ? 'expanded' : ''}">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="tactics-container ${isExpanded ? 'expanded' : ''}">
+                    ${strategy.tactics.map(tactic => `
+                        <div class="tactic-item">
+                            <div class="tactic-arrow">→</div>
+                            <div class="tactic-text">${tactic}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            return strategyCard;
+        }
+
+        // Function to render all strategies
+        function renderStrategies() {
+            const interrogatorContainer = document.getElementById('interrogator-strategies');
+            const respondentContainer = document.getElementById('respondent-strategies');
+            
+            // Clear containers
+            interrogatorContainer.innerHTML = '';
+            respondentContainer.innerHTML = '';
+            
+            // Add interrogator strategies
+            interrogatorStrategies.forEach((strategy, index) => {
+                interrogatorContainer.appendChild(createStrategyCard(strategy, index, 'interrogator'));
+            });
+            
+            // Add respondent strategies
+            respondentStrategies.forEach((strategy, index) => {
+                respondentContainer.appendChild(createStrategyCard(strategy, index, 'respondent'));
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStrategies();
+            
+            // Add stats bar to each panel
+            const interrogatorPanel = document.querySelector('.interrogator-panel');
+            const respondentPanel = document.querySelector('.respondent-panel');
+            
+            const interrogatorStats = document.createElement('div');
+            interrogatorStats.className = 'stats-bar';
+            interrogatorStats.innerHTML = `
+                <span>Total tactics: 16</span>
+                <span>Most common: Accusation Strategy</span>
+                <span>Power position: Dominant</span>
+            `;
+            interrogatorPanel.appendChild(interrogatorStats);
+            
+            const respondentStats = document.createElement('div');
+            respondentStats.className = 'stats-bar';
+            respondentStats.innerHTML = `
+                <span>Total tactics: 10</span>
+                <span>Most common: Self-Defense Strategy</span>
+                <span>Power position: Subordinate</span>
+            `;
+            respondentPanel.appendChild(respondentStats);
+        });
+    </script>
+</body>
+</html>
